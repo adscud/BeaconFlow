@@ -59,3 +59,5 @@ apps/studio/types/**
 
 .expo
 .idea
+.yarn/
+.yarnrc.yml
