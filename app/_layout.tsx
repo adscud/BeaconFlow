@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Slot, Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -61,7 +61,7 @@ function RootLayoutNav() {
           >
             <Stack.Screen name="index" />
             <Stack.Screen
-              name="write-transaction"
+              name="write-initial-balance"
               options={{
                 presentation: "modal",
               }}

@@ -1,16 +1,29 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { H2, H4, H6, Paragraph, View } from "tamagui";
+import { Dimensions } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Button, H2, H4, H6, Paragraph, Text, View } from "tamagui";
 
 import { AddTransactionButton } from "../components/AddTransactionButton";
 import { Card } from "../components/Card";
 import { Plus } from "../components/icons/Plus";
+import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
+import { DatabaseService } from "../services/DatabaseService";
+import { useTransactionsStore } from "../stores/transactions";
+
+const { width, height } = Dimensions.get("window");
 
 export default function Page() {
-  const frame = useSafeAreaFrame();
+  const [transactions] = useTransactionsStore((state) => [state.transactions]);
   const date = new Date();
-  const balance = 0;
+  const balance = transactions.reduce((acc, transaction) => {
+    return acc + transaction.amount;
+  }, 0);
+
+  const onLayoutFetchTransactions = () => {
+    DatabaseService.shared.init();
+    DatabaseService.shared.fetchTransactions();
+  };
 
   return (
     <View
@@ -20,15 +33,16 @@ export default function Page() {
         opacity: 0,
       }}
       animation="lazy"
+      onLayout={onLayoutFetchTransactions}
     >
       <View
-        height={frame.width * 2}
-        width={frame.width * 2}
+        height={width * 2}
+        width={width * 2}
         backgroundColor="red"
         position="absolute"
         borderRadius={600}
         overflow="hidden"
-        transform={[{ translateY: -frame.width - 50 }, { translateX: -150 }]}
+        transform={[{ translateY: -width - 50 }, { translateX: -150 }]}
       >
         <LinearGradient
           flex={1}
@@ -55,10 +69,10 @@ export default function Page() {
             flex={1}
             padding="$4"
             alignItems={!balance ? "center" : "flex-start"}
-            justifyContent={!balance ? "center" : "space-between"}
+            justifyContent={!balance ? "center" : "flex-start"}
           >
             <H6 color="$purple8" fontWeight="900">
-              {i18n.t("balance")}
+              {i18n.t("home.balance")}
             </H6>
             <H2 color={!balance ? "$purple8" : "white"}>
               {Intl.NumberFormat("fr-FR", {
@@ -67,9 +81,9 @@ export default function Page() {
               }).format(balance)}
             </H2>
             {!balance && (
-              <AddTransactionButton>
+              <AddTransactionButton initial>
                 <Plus />
-                {i18n.t("addBalance")}
+                {i18n.t("home.addBalance")}
               </AddTransactionButton>
             )}
           </View>
@@ -77,10 +91,29 @@ export default function Page() {
         {!balance && (
           <View m="auto" zIndex={-1}>
             <Paragraph textAlign="center" color="$gray10">
-              {i18n.t("welcome")}
+              {i18n.t("home.welcome")}
             </Paragraph>
           </View>
         )}
+        <Button
+          onPress={() => {
+            db.transaction((tx) => {
+              tx.executeSql(
+                `DROP TABLE transactions;`,
+                [],
+                () => {
+                  console.log("Dropped");
+                },
+                (_, error) => {
+                  console.error("Error dropping table", error);
+                  return true;
+                },
+              );
+            });
+          }}
+        >
+          <Text>Drop</Text>
+        </Button>
       </SafeAreaView>
     </View>
   );

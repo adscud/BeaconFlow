@@ -1,16 +1,17 @@
 import { PropsWithChildren } from "react";
+import { Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { clamp, YStack } from "tamagui";
 
+const { width } = Dimensions.get("window");
+
 export function Card({ children }: PropsWithChildren) {
-  const frame = useSafeAreaFrame();
-  const cardWidth = clamp(frame.width - 32, [0, 500]);
+  const cardWidth = clamp(width - 32, [0, 500]);
   const cardHeight = cardWidth / 1.586;
   const y = useSharedValue<number>(0);
   const x = useSharedValue<number>(0);
