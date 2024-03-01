@@ -11,8 +11,10 @@ export class DatabaseService {
         `CREATE TABLE IF NOT EXISTS transactions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           amount REAL NOT NULL,
-          description TEXT NOT NULL,
-          createdAt TEXT NOT NULL
+          name TEXT NOT NULL,
+          description TEXT,
+          createdAt TEXT NOT NULL,
+          type TEXT NOT NULL CHECK (type IN ('income', 'expense', 'initial'))
         );`,
         [],
         () => console.log("Table created"),
@@ -28,14 +30,16 @@ export class DatabaseService {
     db.transaction((tx) => {
       const createdAt = new Date().toISOString();
       tx.executeSql(
-        `INSERT INTO transactions (amount, description, createdAt) VALUES (?, ?, ?);`,
-        [amount, "Initial balance", createdAt],
+        `INSERT INTO transactions (amount, name, type, createdAt) VALUES (?, ?, ?, ?);`,
+        [amount, "Initial balance", "initial", createdAt],
         (_, { insertId }) => {
           const { addTransaction } = useTransactionsStore.getState();
           addTransaction({
             id: insertId ?? Math.random(),
             amount,
-            description: "Initial balance",
+            name: "Initial balance",
+            description: null,
+            type: "initial",
             createdAt: new Date(createdAt),
           });
         },
@@ -49,13 +53,13 @@ export class DatabaseService {
 
   insertTransaction(transaction: Transaction) {
     // Convert Date to ISO string for storage
-    const { amount, description, createdAt } = transaction;
+    const { amount, name, description, createdAt, type } = transaction;
     const createdAtISO = createdAt.toISOString();
 
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO transactions (amount, description, createdAt) VALUES (?, ?, ?);`,
-        [amount, description, createdAtISO],
+        `INSERT INTO transactions (amount, name, description, type, createdAt) VALUES (?, ?, ?, ?, ?);`,
+        [amount, name, description, type, createdAtISO],
         () => {
           const { addTransaction } = useTransactionsStore.getState();
           addTransaction(transaction);

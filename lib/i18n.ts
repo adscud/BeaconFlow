@@ -12,6 +12,9 @@ const i18n = new I18n({
       placeholder: "1000",
       submit: "Ajouter",
     },
+    transactions: {
+      initialBalance: "Solde initial",
+    },
   },
 });
 

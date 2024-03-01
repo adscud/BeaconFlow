@@ -73,8 +73,8 @@ export function Card({ children }: PropsWithChildren) {
           backgroundColor="$purple10"
           shadowColor="$purple8"
           shadowOpacity={1}
-          shadowRadius={20}
-          shadowOffset={{ width: 0, height: 10 }}
+          shadowRadius={10}
+          shadowOffset={{ width: 0, height: 6 }}
           enterStyle={{
             y: -600,
           }}

@@ -1,17 +1,16 @@
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, H2, H4, H6, Paragraph, Text, View } from "tamagui";
 
 import { AddTransactionButton } from "../components/AddTransactionButton";
 import { Card } from "../components/Card";
+import { HomeShape } from "../components/HomeShape";
+import { Transactions } from "../components/Transactions";
 import { Plus } from "../components/icons/Plus";
 import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
 import { DatabaseService } from "../services/DatabaseService";
+import { TransactionService } from "../services/TransactionService";
 import { useTransactionsStore } from "../stores/transactions";
-
-const { width, height } = Dimensions.get("window");
 
 export default function Page() {
   const [transactions] = useTransactionsStore((state) => [state.transactions]);
@@ -19,6 +18,7 @@ export default function Page() {
   const balance = transactions.reduce((acc, transaction) => {
     return acc + transaction.amount;
   }, 0);
+  const transactionsByDate = TransactionService.shared.group(transactions);
 
   const onLayoutFetchTransactions = () => {
     DatabaseService.shared.init();
@@ -35,23 +35,7 @@ export default function Page() {
       animation="lazy"
       onLayout={onLayoutFetchTransactions}
     >
-      <View
-        height={width * 2}
-        width={width * 2}
-        backgroundColor="red"
-        position="absolute"
-        borderRadius={600}
-        overflow="hidden"
-        transform={[{ translateY: -width - 50 }, { translateX: -150 }]}
-      >
-        <LinearGradient
-          flex={1}
-          borderRadius="$4"
-          colors={["$purple10", "$purple8"]}
-          start={[1, 0]}
-          end={[0, 1]}
-        />
-      </View>
+      <HomeShape />
       <SafeAreaView style={{ flex: 1 }}>
         <View paddingVertical="$3" paddingHorizontal="$4">
           <H6 color="white">Beacon flow</H6>
@@ -95,24 +79,24 @@ export default function Page() {
             </Paragraph>
           </View>
         )}
+        {!!balance && <Transactions data={transactionsByDate} />}
         <Button
           onPress={() => {
             db.transaction((tx) => {
               tx.executeSql(
-                `DROP TABLE transactions;`,
+                "DROP TABLE transactions",
                 [],
                 () => {
-                  console.log("Dropped");
+                  console.log("dropped");
                 },
-                (_, error) => {
-                  console.error("Error dropping table", error);
-                  return true;
+                (err) => {
+                  console.log("err", err);
                 },
               );
             });
           }}
         >
-          <Text>Drop</Text>
+          <Text>drop</Text>
         </Button>
       </SafeAreaView>
     </View>
