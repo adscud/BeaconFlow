@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Slot } from "expo-router";
+import { SplashScreen, Slot, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -41,6 +41,10 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+export const unstable_settings = {
+  name: "index",
+};
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
@@ -50,7 +54,19 @@ function RootLayoutNav() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <Slot />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen
+              name="write-transaction"
+              options={{
+                presentation: "modal",
+              }}
+            />
+          </Stack>
         </ThemeProvider>
       </TamaguiProvider>
     </GestureHandlerRootView>

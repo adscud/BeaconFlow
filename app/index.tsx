@@ -1,7 +1,8 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { Button, H2, H4, H6, Paragraph, View } from "tamagui";
+import { H2, H4, H6, Paragraph, View } from "tamagui";
 
+import { AddTransactionButton } from "../components/AddTransactionButton";
 import { Card } from "../components/Card";
 import { Plus } from "../components/icons/Plus";
 import { i18n } from "../lib/i18n";
@@ -66,21 +67,10 @@ export default function Page() {
               }).format(balance)}
             </H2>
             {!balance && (
-              <Button
-                backgroundColor="$purple10"
-                borderColor="$purple10"
-                animation="lazy"
-                transform={[{ scale: 1 }]}
-                pressStyle={{
-                  backgroundColor: "$purple9",
-                  borderColor: "$purple9",
-                  transform: [{ scale: 0.95 }],
-                }}
-                color="white"
-              >
+              <AddTransactionButton>
                 <Plus />
                 {i18n.t("addBalance")}
-              </Button>
+              </AddTransactionButton>
             )}
           </View>
         </Card>
