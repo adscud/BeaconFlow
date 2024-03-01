@@ -1,7 +1,6 @@
-import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "@tamagui/linear-gradient";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { H1, H2, H3, H4, H6, Text, View, XStack } from "tamagui";
+import { H2, H4, H6, View } from "tamagui";
 
 import { Card } from "../components/Card";
 
@@ -28,19 +27,17 @@ export default function Page() {
         transform={[{ translateY: -frame.width - 50 }, { translateX: -150 }]}
       >
         <LinearGradient
-            flex={1}
-            borderRadius="$4"
-            colors={["$purple10", "$purple8"]}
-            start={[1, 0]}
-            end={[0, 1]}
+          flex={1}
+          borderRadius="$4"
+          colors={["$purple10", "$purple8"]}
+          start={[1, 0]}
+          end={[0, 1]}
         />
       </View>
       <SafeAreaView style={{ flex: 1 }}>
-        <View paddingVertical={"$3"} paddingHorizontal={'$4'}>
-          <H6 color={"white"}>
-            Beacon flow
-          </H6>
-          <H4 color={"white"} textTransform={"capitalize"}>
+        <View paddingVertical="$3" paddingHorizontal="$4">
+          <H6 color="white">Beacon flow</H6>
+          <H4 color="white" textTransform="capitalize">
             {date.toLocaleDateString("fr-FR", {
               weekday: "long",
               year: "numeric",
