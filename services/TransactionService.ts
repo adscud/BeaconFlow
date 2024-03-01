@@ -3,13 +3,11 @@ import { Transaction } from "../types";
 export class TransactionService {
   static shared = new TransactionService();
 
-  private normalizeDate(date: Date) {
+  normalizeDate(date: Date) {
     return date.toISOString().split("T")[0];
   }
 
-  private groupByDate(
-    transactions: Transaction[],
-  ): Record<string, Transaction[]> {
+  groupByDate(transactions: Transaction[]): Record<string, Transaction[]> {
     return transactions.reduce(
       (acc, transaction) => {
         const dateKey = this.normalizeDate(transaction.createdAt);
@@ -23,7 +21,7 @@ export class TransactionService {
     );
   }
 
-  private flattenTransactions(
+  flattenTransactions(
     groupedTransactions: Record<string, Transaction[]>,
   ): (string | Transaction)[] {
     const result: (string | Transaction)[] = [];
