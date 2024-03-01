@@ -1,13 +1,11 @@
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "@tamagui/linear-gradient";
-import { useState } from "react";
-import Animated, { FadeInUp } from "react-native-reanimated";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { Button, clamp, H4, Text, View, XStack, YStack } from "tamagui";
-import {Card} from "../components/Card";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { H4, Text, XStack } from "tamagui";
+
+import { Card } from "../components/Card";
 
 export default function Page() {
-
   const date = new Date();
 
   return (
