@@ -1,12 +1,15 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { H2, H4, H6, View } from "tamagui";
+import { Button, H2, H4, H6, Paragraph, View } from "tamagui";
 
 import { Card } from "../components/Card";
+import { Plus } from "../components/icons/Plus";
+import { i18n } from "../lib/i18n";
 
 export default function Page() {
   const frame = useSafeAreaFrame();
   const date = new Date();
+  const balance = 0;
 
   return (
     <View
@@ -47,18 +50,47 @@ export default function Page() {
           </H4>
         </View>
         <Card>
-          <View flex={1} padding="$4">
+          <View
+            flex={1}
+            padding="$4"
+            alignItems={!balance ? "center" : "flex-start"}
+            justifyContent={!balance ? "center" : "space-between"}
+          >
             <H6 color="$purple8" fontWeight="900">
-              BALANCE
+              {i18n.t("balance")}
             </H6>
-            <H2 color="white">
+            <H2 color={!balance ? "$purple8" : "white"}>
               {Intl.NumberFormat("fr-FR", {
                 style: "currency",
                 currency: "EUR",
-              }).format(123456.78)}
+              }).format(balance)}
             </H2>
+            {!balance && (
+              <Button
+                backgroundColor="$purple10"
+                borderColor="$purple10"
+                animation="lazy"
+                transform={[{ scale: 1 }]}
+                pressStyle={{
+                  backgroundColor: "$purple9",
+                  borderColor: "$purple9",
+                  transform: [{ scale: 0.95 }],
+                }}
+                color="white"
+              >
+                <Plus />
+                {i18n.t("addBalance")}
+              </Button>
+            )}
           </View>
         </Card>
+        {!balance && (
+          <View m="auto" zIndex={-1}>
+            <Paragraph textAlign="center" color="$gray10">
+              {i18n.t("welcome")}
+            </Paragraph>
+          </View>
+        )}
       </SafeAreaView>
     </View>
   );
