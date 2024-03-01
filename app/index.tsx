@@ -6,7 +6,6 @@ import { Card } from "../components/Card";
 import { HomeShape } from "../components/HomeShape";
 import { Transactions } from "../components/Transactions";
 import { Plus } from "../components/icons/Plus";
-import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
 import { DatabaseService } from "../services/DatabaseService";
 import { TransactionService } from "../services/TransactionService";
@@ -29,6 +28,7 @@ export default function Page() {
     <View
       flex={1}
       position="relative"
+      backgroundColor="white"
       enterStyle={{
         opacity: 0,
       }}
@@ -50,7 +50,6 @@ export default function Page() {
         </View>
         <Card>
           <View
-            flex={1}
             padding="$4"
             alignItems={!balance ? "center" : "flex-start"}
             justifyContent={!balance ? "center" : "flex-start"}
@@ -80,23 +79,8 @@ export default function Page() {
           </View>
         )}
         {!!balance && <Transactions data={transactionsByDate} />}
-        <Button
-          onPress={() => {
-            db.transaction((tx) => {
-              tx.executeSql(
-                "DROP TABLE transactions",
-                [],
-                () => {
-                  console.log("dropped");
-                },
-                (err) => {
-                  console.log("err", err);
-                },
-              );
-            });
-          }}
-        >
-          <Text>drop</Text>
+        <Button onPress={DatabaseService.shared.drop}>
+          <Text>Drop</Text>
         </Button>
       </SafeAreaView>
     </View>

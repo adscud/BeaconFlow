@@ -26,6 +26,20 @@ export class DatabaseService {
     });
   }
 
+  drop() {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `DROP TABLE transactions;`,
+        [],
+        () => console.log("Table dropped"),
+        (_, error) => {
+          console.error("Error dropping table", error);
+          return true;
+        },
+      );
+    });
+  }
+
   setInitialBalance(amount: number) {
     db.transaction((tx) => {
       const createdAt = new Date().toISOString();

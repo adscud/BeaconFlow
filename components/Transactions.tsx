@@ -10,11 +10,16 @@ type Props = {
 
 export function Transactions({ data }: Props) {
   return (
-    <View zIndex={-1} flex={1} marginHorizontal="$4">
+    <View
+      zIndex={-1}
+      flex={1}
+      marginHorizontal="$4"
+      backgroundColor="white"
+      mt="$4"
+      px="$4"
+      borderRadius="$4"
+    >
       <FlashList
-        contentContainerStyle={{
-          paddingTop: 32,
-        }}
         data={data}
         renderItem={({ item }: { item: Transaction | string }) => {
           if (typeof item === "string") {
@@ -36,7 +41,7 @@ function RenderDate({ item }: { item: string }) {
   const date = new Date(item);
 
   return (
-    <Text color="$gray8" textTransform="capitalize">
+    <Text color="$gray8" textTransform="capitalize" marginTop="$4">
       {date.toLocaleDateString("fr-FR", {
         weekday: "long",
         year: "numeric",

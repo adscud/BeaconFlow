@@ -12,7 +12,6 @@ const { width } = Dimensions.get("window");
 
 export function Card({ children }: PropsWithChildren) {
   const cardWidth = clamp(width - 32, [0, 500]);
-  const cardHeight = cardWidth / 1.586;
   const y = useSharedValue<number>(0);
   const x = useSharedValue<number>(0);
   const scale = useSharedValue<number>(1);
@@ -66,7 +65,6 @@ export function Card({ children }: PropsWithChildren) {
       <Animated.View style={animatedCardStyle}>
         <YStack
           width={cardWidth}
-          height={cardHeight}
           opacity={1}
           mx="auto"
           borderRadius="$4"
