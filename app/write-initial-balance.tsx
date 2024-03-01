@@ -12,6 +12,10 @@ export default function Page() {
   const disabled = !balance || balance === "0";
 
   const handleWriteInitialBalance = () => {
+    if (disabled) {
+      return;
+    }
+
     DatabaseService.shared.setInitialBalance(Number(balance));
     router.back();
   };
@@ -27,9 +31,10 @@ export default function Page() {
         edges={Platform.OS === "android" ? ["top", "bottom"] : ["bottom"]}
       >
         <XStack>
-          <H4>{i18n.t("writeInitialBalance.title")}</H4>
+          <H4 testID="title">{i18n.t("writeInitialBalance.title")}</H4>
         </XStack>
         <Input
+          testID="balance-input"
           marginVertical="$5"
           backgroundColor="white"
           borderColor="white"
@@ -40,6 +45,7 @@ export default function Page() {
           keyboardType="number-pad"
         />
         <Button
+          testID="submit-button"
           theme="purple"
           marginTop="auto"
           color="$purple10"
