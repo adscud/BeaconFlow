@@ -26,6 +26,7 @@ export default function Page() {
 
   return (
     <View
+      testID="main"
       flex={1}
       position="relative"
       backgroundColor="white"
@@ -57,7 +58,7 @@ export default function Page() {
             <H6 color="$purple8" fontWeight="900">
               {i18n.t("home.balance")}
             </H6>
-            <H2 color={!balance ? "$purple8" : "white"}>
+            <H2 testID="balance" color={!balance ? "$purple8" : "white"}>
               {Intl.NumberFormat("fr-FR", {
                 style: "currency",
                 currency: "EUR",
@@ -72,7 +73,7 @@ export default function Page() {
           </View>
         </Card>
         {!balance && (
-          <View m="auto" zIndex={-1}>
+          <View testID="welcome-text" m="auto" zIndex={-1}>
             <Paragraph textAlign="center" color="$gray10">
               {i18n.t("home.welcome")}
             </Paragraph>

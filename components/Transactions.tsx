@@ -11,6 +11,7 @@ type Props = {
 export function Transactions({ data }: Props) {
   return (
     <View
+      testID="transactions"
       zIndex={-1}
       flex={1}
       marginHorizontal="$4"

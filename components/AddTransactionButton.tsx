@@ -17,6 +17,7 @@ export function AddTransactionButton({ children, initial = false }: Props) {
 
   return (
     <Button
+      testID="add-transaction-button"
       backgroundColor="$purple10"
       borderColor="$purple10"
       animation="lazy"
