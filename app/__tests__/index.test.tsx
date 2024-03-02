@@ -6,7 +6,7 @@ import { createTamagui, TamaguiProvider } from "tamagui";
 
 import { DatabaseService } from "../../services/DatabaseService";
 import { useTransactionsStore } from "../../stores/transactions";
-import Index from "../index";
+import Index from "../onboarding";
 
 beforeEach(() => {
   jest.clearAllMocks();

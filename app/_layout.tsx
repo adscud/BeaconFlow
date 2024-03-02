@@ -4,13 +4,14 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { TamaguiProvider } from "tamagui";
 
 import "../tamagui-web.css";
+import { DatabaseService } from "../services/DatabaseService";
 import { config } from "../tamagui.config";
 
 export {
@@ -30,7 +31,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (interLoaded || interError) {
       // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().then(DatabaseService.shared.init);
     }
   }, [interLoaded, interError]);
 
@@ -42,7 +43,7 @@ export default function RootLayout() {
 }
 
 export const unstable_settings = {
-  name: "index",
+  name: "(ready)",
 };
 
 function RootLayoutNav() {
@@ -54,19 +55,7 @@ function RootLayoutNav() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="index" />
-            <Stack.Screen
-              name="write-initial-balance"
-              options={{
-                presentation: "modal",
-              }}
-            />
-          </Stack>
+          <Slot />
         </ThemeProvider>
       </TamaguiProvider>
     </GestureHandlerRootView>

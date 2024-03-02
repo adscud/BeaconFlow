@@ -6,3 +6,11 @@ export type Transaction = {
   type: "income" | "expense" | "initial";
   createdAt: Date;
 };
+
+export type Settings = {
+  id: number;
+  current_balance: number;
+  salary: number;
+  currency: string;
+  language: string;
+};

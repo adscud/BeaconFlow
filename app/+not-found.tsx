@@ -1,10 +1,11 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text } from "tamagui";
 
 export default function NotFoundScreen() {
   return (
-    <>
+    <SafeAreaView>
       <Stack.Screen options={{ title: "Oops!" }} />
       <View margin={10}>
         <Text>This screen doesn't exist.</Text>
@@ -12,7 +13,7 @@ export default function NotFoundScreen() {
           <Text style={styles.linkText}>Go to home screen!</Text>
         </Link>
       </View>
-    </>
+    </SafeAreaView>
   );
 }
 

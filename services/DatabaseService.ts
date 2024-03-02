@@ -17,9 +17,43 @@ export class DatabaseService {
           type TEXT NOT NULL CHECK (type IN ('income', 'expense', 'initial'))
         );`,
         [],
-        () => console.log("Table created"),
+        () => console.log("Transactions table created"),
         (_, error) => {
-          console.error("Error creating table", error);
+          console.error("Error creating transactions table", error);
+          return true;
+        },
+      );
+
+      // Create settings table
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS settings (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          ready BOOLEAN NOT NULL,
+          current_balance REAL NOT NULL,
+          salary REAL NOT NULL,
+          currency TEXT NOT NULL,
+          language TEXT NOT NULL
+        );`,
+        [],
+        () => console.log("Settings table created"),
+        (_, error) => {
+          console.error("Error creating settings table", error);
+          return true;
+        },
+      );
+
+      // Create recurrentExpenses table
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS recurrentExpenses (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          amount REAL NOT NULL,
+          description TEXT NOT NULL,
+          frequency TEXT NOT NULL
+        );`,
+        [],
+        () => console.log("RecurrentExpenses table created"),
+        (_, error) => {
+          console.error("Error creating recurrentExpenses table", error);
           return true;
         },
       );
