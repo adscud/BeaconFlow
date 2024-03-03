@@ -4,9 +4,9 @@ import { router } from "expo-router";
 import { fireEvent, renderRouter, screen } from "expo-router/testing-library";
 import { createTamagui, TamaguiProvider } from "tamagui";
 
+import Index from "../(onboarding)";
 import { DatabaseService } from "../../services/DatabaseService";
 import { useTransactionsStore } from "../../stores/transactions";
-import Index from "../onboarding";
 
 beforeEach(() => {
   jest.clearAllMocks();

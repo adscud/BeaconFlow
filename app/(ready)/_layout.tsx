@@ -23,7 +23,7 @@ export default function Layout() {
   }
 
   if (!loading && !settings) {
-    return <Redirect href="/onboarding" />;
+    return <Redirect href="/(onboarding)" />;
   }
 
   return <Slot />;
