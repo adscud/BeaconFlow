@@ -9,7 +9,7 @@ Settings => change recurrent expenses, change salary, change currency, change la
 ### TODO 
 
 - [ ] Onboarding - Enter current balance
-- [ ] Onboarding - Enter salary
+- [X] Onboarding - Enter salary
 - [ ] Onboarding - Enter recurrent expenses
 - [ ] App - Show current balance
 - [ ] App - Add income/expense
