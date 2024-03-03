@@ -1,17 +1,18 @@
 import { Slot } from "expo-router";
-import { ImageBackground } from "react-native";
+import { Dimensions, ImageBackground } from "react-native";
 import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { H3, Paragraph, View } from "tamagui";
 
 import { useOnboardingStep } from "../../hooks/useOnboardingStep";
 import { i18n } from "../../lib/i18n";
 
+const { width } = Dimensions.get("window");
+
 export default function Layout() {
-  const { width } = useSafeAreaFrame();
   const tier = (width - 36) / 3;
   const step = useOnboardingStep();
 
