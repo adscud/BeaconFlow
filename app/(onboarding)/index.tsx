@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Dimensions, ScrollView as RNScrollView } from "react-native";
 import { runOnJS, useAnimatedReaction } from "react-native-reanimated";
 import { ScrollView, View } from "tamagui";
 
+import { EnterCurrentBalance } from "../../components/EnterCurrentBalance";
 import { EnterRecurrentExpenses } from "../../components/EnterRecurrentExpenses";
 import { EnterSalary } from "../../components/EnterSalary";
 import { useOnboardingStep } from "../../hooks/useOnboardingStep";
@@ -11,7 +12,6 @@ const { width } = Dimensions.get("window");
 export default function Page() {
   const listRef = useRef<RNScrollView>(null);
   const step = useOnboardingStep();
-  const [salary, setSalary] = useState<string>("");
 
   const scrollTo = (x: number) => {
     listRef.current?.scrollTo({ x, animated: true });
@@ -35,8 +35,9 @@ export default function Page() {
         showsHorizontalScrollIndicator={false}
         scrollEnabled={false}
       >
-        <EnterSalary value={salary} onChange={setSalary} />
+        <EnterSalary />
         <EnterRecurrentExpenses />
+        <EnterCurrentBalance />
       </ScrollView>
     </View>
   );

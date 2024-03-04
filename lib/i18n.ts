@@ -45,6 +45,10 @@ const i18n = new I18n({
         label: "Label",
         add: "Ajouter",
       },
+      balance: {
+        label: "Votre solde actuel",
+        placeholder: "Solde",
+      },
     },
   },
 });
