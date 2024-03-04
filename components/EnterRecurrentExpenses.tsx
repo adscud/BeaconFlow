@@ -9,8 +9,8 @@ import { Button } from "./Button";
 import { AddRecurrentExpenseModal } from "./EnterRecurrentExpenseModal";
 import { ArrowLeft } from "./icons/ArrowLeft";
 import { ArrowRight } from "./icons/ArrowRight";
+import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
-import { DatabaseService } from "../services/DatabaseService";
 import { useRecurringExpenses } from "../stores/recurring-expenses";
 import { RecurrentExpense } from "../types";
 
@@ -34,7 +34,19 @@ export function EnterRecurrentExpenses() {
   };
 
   const handleNextStep = () => {
-    DatabaseService.shared.addRecurrentExpenses(expenses);
+    db.transaction((tx) => {
+      expenses.forEach((expense) => {
+        tx.executeSql(
+          `INSERT INTO recurrentExpenses (amount, name, label) VALUES (?, ?, ?);`,
+          [expense.amount, expense.name, expense.label],
+          () => {},
+          (_, error) => {
+            console.error("Error adding recurrent expense", error);
+            return true;
+          },
+        );
+      });
+    });
     router.setParams({ step: "3" });
   };
 

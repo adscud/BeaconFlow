@@ -6,12 +6,20 @@ import { H6, Input, View, XStack } from "tamagui";
 import { Button } from "./Button";
 import { ArrowLeft } from "./icons/ArrowLeft";
 import { ArrowRight } from "./icons/ArrowRight";
+import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
+import { useSettingsStore } from "../stores/settings";
 
 const { width } = Dimensions.get("window");
 
 export function EnterCurrentBalance() {
-  const [balance, setBalance] = useState<string>("");
+  const [settings, setSettings] = useSettingsStore((store) => [
+    store.settings,
+    store.setSettings,
+  ]);
+  const [balance, setBalance] = useState<string>(
+    settings?.current_balance?.toString() || "",
+  );
   const disabled = !balance || balance === "0" || Number.isNaN(+balance);
 
   const handlePrevStep = () => {
@@ -19,7 +27,21 @@ export function EnterCurrentBalance() {
   };
 
   const handleNextStep = () => {
-    //
+    if (!settings) return;
+    db.transaction((tx) => {
+      tx.executeSql(
+        `UPDATE settings SET current_balance = ?, ready = 1 WHERE id = ?`,
+        [balance, settings.id],
+        () => {
+          setSettings({ ...settings, current_balance: +balance, ready: true });
+          router.navigate("/(ready)");
+        },
+        (_, error) => {
+          console.error("Error updating current balance", error);
+          return true;
+        },
+      );
+    });
   };
 
   return (
