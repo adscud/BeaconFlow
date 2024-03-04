@@ -28,6 +28,10 @@ export function EnterRecurrentExpenses() {
     router.setParams({ step: "1" });
   };
 
+  const handleNextStep = () => {
+    router.setParams({ step: "3" });
+  };
+
   const handleAddExpense = () => {
     addExpenseModalRef.current?.present();
   };
@@ -69,11 +73,13 @@ export function EnterRecurrentExpenses() {
             <Empty onOpenAddExpenseModal={handleAddExpense} />
           }
           ListHeaderComponent={
-            amountOfExpenses > 0 ? <Header amount={amountOfExpenses} /> : null
+            amountOfExpenses > 0 ? (
+              <Header amount={amountOfExpenses} onNextStep={handleNextStep} />
+            ) : null
           }
         />
         {expenses.length > 0 && (
-          <Button marginBottom="$4">
+          <Button marginBottom="$4" onPress={handleAddExpense}>
             <Text color="$purple10" fontWeight="900">
               {i18n.t("onboarding.recurrentExpenses.addExpense")}
             </Text>
@@ -90,9 +96,10 @@ export function EnterRecurrentExpenses() {
 
 type HeaderProps = {
   amount: number;
+  onNextStep: () => void;
 };
 
-function Header({ amount }: HeaderProps) {
+function Header({ amount, onNextStep }: HeaderProps) {
   return (
     <XStack justifyContent="space-between" alignItems="center">
       <Text
@@ -103,7 +110,7 @@ function Header({ amount }: HeaderProps) {
       >
         {amount}€
       </Text>
-      <Button size="$4">
+      <Button size="$4" onPress={onNextStep}>
         <ArrowRight />
       </Button>
     </XStack>
