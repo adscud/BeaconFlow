@@ -2446,6 +2446,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gorhom/bottom-sheet@npm:^4":
+  version: 4.6.1
+  resolution: "@gorhom/bottom-sheet@npm:4.6.1"
+  dependencies:
+    "@gorhom/portal": "npm:1.0.14"
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=1.10.1"
+    react-native-reanimated: ">=2.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: c378f3722afec4ef94dc0e7cfedaee4c64b55fa81f5b7135ffe129e3a1e1cc6498d168ba93690125527cd5c1a5655105d38024215294ca0a5fe32ebefe6df094
+  languageName: node
+  linkType: hard
+
+"@gorhom/portal@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@gorhom/portal@npm:1.0.14"
+  dependencies:
+    nanoid: "npm:^3.3.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: e0fa06be88b850cccdc6a1417a86e5ac21d82e3bfd1cec7eb05eccf7f3b595babe305541f278fdcbde34f3a9db465097dca2c785445c28bafb83b744e235da0c
+  languageName: node
+  linkType: hard
+
 "@graphql-typed-document-node/core@npm:^3.1.0":
   version: 3.2.0
   resolution: "@graphql-typed-document-node/core@npm:3.2.0"
@@ -3198,6 +3232,16 @@ __metadata:
     react: ">=16"
     react-native: ">=0.57"
   checksum: a47fc4726fe1399552d5b57a8f75fbf8f2f6212b9061385762f842b04e2bf9a1669524d9e231cbf507d3f04a1e17cf15bb043524a7a1d3391d4768869377d6aa
+  languageName: node
+  linkType: hard
+
+"@react-native-picker/picker@npm:2.6.1":
+  version: 2.6.1
+  resolution: "@react-native-picker/picker@npm:2.6.1"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.57"
+  checksum: 55577a263f774361430acc729fe68e5fe60f177939e32fd572d67da20deab2dcd7c62af9eaa0bc09dea3af09391a80be5d65efb566e2f2e9748e1d427c740bed
   languageName: node
   linkType: hard
 
@@ -6353,7 +6397,9 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.23.3"
     "@expo/metro-runtime": "npm:~3.1.3"
+    "@gorhom/bottom-sheet": "npm:^4"
     "@react-native-masked-view/masked-view": "npm:0.3.0"
+    "@react-native-picker/picker": "npm:2.6.1"
     "@react-navigation/native": "npm:^6.0.2"
     "@shopify/flash-list": "npm:1.6.3"
     "@tamagui/config": "npm:^1.90.15"
@@ -12292,7 +12338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.1.23, nanoid@npm:^3.3.7":
+"nanoid@npm:^3.1.23, nanoid@npm:^3.3.1, nanoid@npm:^3.3.7":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
   bin:

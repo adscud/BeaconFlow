@@ -14,3 +14,10 @@ export type Settings = {
   currency: string;
   language: string;
 };
+
+export type RecurrentExpense = {
+  id: number;
+  name: string;
+  amount: number;
+  label: string;
+};

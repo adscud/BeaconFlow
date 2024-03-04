@@ -10,7 +10,7 @@ Settings => change recurrent expenses, change salary, change currency, change la
 
 - [ ] Onboarding - Enter current balance
 - [X] Onboarding - Enter salary
-- [ ] Onboarding - Enter recurrent expenses
+- [X] Onboarding - Enter recurrent expenses
 - [ ] App - Show current balance
 - [ ] App - Add income/expense
 - [ ] App - Indicate that salary was received
