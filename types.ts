@@ -9,6 +9,7 @@ export type Transaction = {
 
 export type Settings = {
   id: number;
+  ready: boolean;
   current_balance: number;
   salary: number;
   currency: string;

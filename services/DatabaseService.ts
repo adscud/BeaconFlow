@@ -1,4 +1,5 @@
 import { db } from "../lib/database";
+import { useSettingsStore } from "../stores/settings";
 import { useTransactionsStore } from "../stores/transactions";
 import { Transaction } from "../types";
 
@@ -17,7 +18,7 @@ export class DatabaseService {
           type TEXT NOT NULL CHECK (type IN ('income', 'expense', 'initial'))
         );`,
         [],
-        () => console.log("Transactions table created"),
+        () => {},
         (_, error) => {
           console.error("Error creating transactions table", error);
           return true;
@@ -35,7 +36,21 @@ export class DatabaseService {
           language TEXT NOT NULL
         );`,
         [],
-        () => console.log("Settings table created"),
+        (_, { rows }) => {
+          tx.executeSql("SELECT * FROM settings LIMIT 1", [], (_, { rows }) => {
+            if (rows.length === 0) {
+              tx.executeSql(
+                `INSERT INTO settings (ready, current_balance, salary, currency, language) VALUES (?, ?, ?, ?, ?);`,
+                [false, 0, 0, "EUR", "fr"],
+                () => console.log("Settings created"),
+                (_, error) => {
+                  console.error("Error creating settings", error);
+                  return true;
+                },
+              );
+            }
+          });
+        },
         (_, error) => {
           console.error("Error creating settings table", error);
           return true;
@@ -51,9 +66,32 @@ export class DatabaseService {
           frequency TEXT NOT NULL
         );`,
         [],
-        () => console.log("RecurrentExpenses table created"),
+        () => {},
         (_, error) => {
           console.error("Error creating recurrentExpenses table", error);
+          return true;
+        },
+      );
+    });
+  }
+
+  updateSalary(salary: number) {
+    const { settings } = useSettingsStore.getState();
+    if (!settings) return;
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        `UPDATE settings SET salary = ? WHERE id = ?;`,
+        [salary, settings.id],
+        () => {
+          const { setSettings } = useSettingsStore.getState();
+          setSettings({
+            ...settings,
+            salary,
+          });
+        },
+        (_, error) => {
+          console.error("Error updating salary", error);
           return true;
         },
       );

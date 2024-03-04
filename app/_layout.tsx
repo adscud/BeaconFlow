@@ -11,7 +11,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { TamaguiProvider } from "tamagui";
 
 import "../tamagui-web.css";
+import { db } from "../lib/database";
 import { DatabaseService } from "../services/DatabaseService";
+import { useSettingsStore } from "../stores/settings";
 import { config } from "../tamagui.config";
 
 export {
@@ -23,19 +25,45 @@ export {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [loading, setLoading, setSettings] = useSettingsStore((store) => [
+    store.loading,
+    store.setLoading,
+    store.setSettings,
+  ]);
   const [interLoaded, interError] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
   useEffect(() => {
-    if (interLoaded || interError) {
-      // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-      SplashScreen.hideAsync().then(DatabaseService.shared.init);
-    }
-  }, [interLoaded, interError]);
+    DatabaseService.shared.init();
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM settings LIMIT 1`,
+        [],
+        (_, { rows }) => {
+          const settings = rows.item(0);
+          if (settings) {
+            setSettings(settings);
+          }
+          setLoading(false);
+        },
+        (_, error) => {
+          console.error("Error fetching settings", error);
+          return true;
+        },
+      );
+    });
+  }, []);
 
-  if (!interLoaded && !interError) {
+  useEffect(() => {
+    if ((interLoaded || interError) && loading) {
+      // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
+      SplashScreen.hideAsync();
+    }
+  }, [interLoaded, interError, loading]);
+
+  if ((!interLoaded && !interError) || loading) {
     return null;
   }
 
@@ -43,7 +71,7 @@ export default function RootLayout() {
 }
 
 export const unstable_settings = {
-  name: "(ready)",
+  initialRouteName: "(ready)",
 };
 
 function RootLayoutNav() {
