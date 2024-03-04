@@ -13,14 +13,14 @@ const { width } = Dimensions.get("window");
 
 export function EnterSalary() {
   const [settings] = useSettingsStore((store) => [store.settings]);
-  const [salary, setSalary] = useState<string>(settings.salary.toString());
+  const [salary, setSalary] = useState<string>(
+    settings?.salary?.toString() || "",
+  );
   const disabled = !salary || salary === "0" || Number.isNaN(+salary);
 
   const handleNextStep = () => {
     Keyboard.dismiss();
-
     DatabaseService.shared.updateSalary(+salary);
-
     router.setParams({ step: "2" });
   };
 

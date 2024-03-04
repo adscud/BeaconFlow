@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Dimensions } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -10,6 +10,8 @@ import { AddRecurrentExpenseModal } from "./EnterRecurrentExpenseModal";
 import { ArrowLeft } from "./icons/ArrowLeft";
 import { ArrowRight } from "./icons/ArrowRight";
 import { i18n } from "../lib/i18n";
+import { DatabaseService } from "../services/DatabaseService";
+import { useRecurringExpenses } from "../stores/recurring-expenses";
 import { RecurrentExpense } from "../types";
 
 const { width } = Dimensions.get("window");
@@ -18,7 +20,10 @@ export function EnterRecurrentExpenses() {
     present: () => void;
   }>(null);
   const router = useRouter();
-  const [expenses, setExpenses] = useState<RecurrentExpense[]>([]);
+  const [expenses, setExpenses] = useRecurringExpenses((store) => [
+    store.expenses,
+    store.setExpenses,
+  ]);
   const amountOfExpenses = expenses.reduce(
     (acc, expense) => acc + expense.amount,
     0,
@@ -29,6 +34,7 @@ export function EnterRecurrentExpenses() {
   };
 
   const handleNextStep = () => {
+    DatabaseService.shared.addRecurrentExpenses(expenses);
     router.setParams({ step: "3" });
   };
 
@@ -37,11 +43,11 @@ export function EnterRecurrentExpenses() {
   };
 
   const handleExpenseAdded = (expense: RecurrentExpense) => {
-    setExpenses((prev) => [...prev, expense]);
+    setExpenses([...expenses, expense]);
   };
 
   const handleRemoveExpense = (id: number) => {
-    setExpenses((prev) => prev.filter((expense) => expense.id !== id));
+    setExpenses(expenses.filter((expense) => expense.id !== id));
   };
 
   const renderItem = ({ item }: { item: RecurrentExpense }) => {

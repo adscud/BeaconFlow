@@ -13,6 +13,8 @@ import { TamaguiProvider } from "tamagui";
 import "../tamagui-web.css";
 import { db } from "../lib/database";
 import { DatabaseService } from "../services/DatabaseService";
+import { useAppStore } from "../stores/app";
+import { useRecurringExpenses } from "../stores/recurring-expenses";
 import { useSettingsStore } from "../stores/settings";
 import { config } from "../tamagui.config";
 
@@ -25,11 +27,13 @@ export {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loading, setLoading, setSettings] = useSettingsStore((store) => [
+  const [loading, setLoading] = useAppStore((store) => [
     store.loading,
     store.setLoading,
-    store.setSettings,
   ]);
+  const [setSettings] = useSettingsStore((store) => [store.setSettings]);
+  const [setExpenses] = useRecurringExpenses((store) => [store.setExpenses]);
+
   const [interLoaded, interError] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
@@ -46,7 +50,15 @@ export default function RootLayout() {
           if (settings) {
             setSettings(settings);
           }
-          setLoading(false);
+
+          tx.executeSql(
+            `SELECT * FROM recurrentExpenses`,
+            [],
+            (_, { rows }) => {
+              setExpenses(rows._array);
+              setLoading(false);
+            },
+          );
         },
         (_, error) => {
           console.error("Error fetching settings", error);
