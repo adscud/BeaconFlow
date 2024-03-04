@@ -8,6 +8,10 @@ Settings => change recurrent expenses, change salary, change currency, change la
  
 ### TODO 
 
+- [ ] Onboarding - Set the correct step
+- [ ] Onboarding - Save salary
+- [ ] Onboarding - Save recurrent expenses
+- [ ] Onboarding - Save current balance
 - [ ] Onboarding - Enter current balance
 - [X] Onboarding - Enter salary
 - [X] Onboarding - Enter recurrent expenses
