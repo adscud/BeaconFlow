@@ -1,7 +1,7 @@
 import { db } from "../lib/database";
 import { useSettingsStore } from "../stores/settings";
 import { useTransactionsStore } from "../stores/transactions";
-import { Transaction } from "../types";
+import { RecurrentExpense, Transaction } from "../types";
 
 export class DatabaseService {
   static shared = new DatabaseService();
@@ -41,7 +41,7 @@ export class DatabaseService {
             if (rows.length === 0) {
               tx.executeSql(
                 `INSERT INTO settings (ready, current_balance, salary, currency, language) VALUES (?, ?, ?, ?, ?);`,
-                [false, 0, 0, "EUR", "fr"],
+                [0, 0, 0, "EUR", "fr"],
                 () => console.log("Settings created"),
                 (_, error) => {
                   console.error("Error creating settings", error);
@@ -62,8 +62,8 @@ export class DatabaseService {
         `CREATE TABLE IF NOT EXISTS recurrentExpenses (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           amount REAL NOT NULL,
-          description TEXT NOT NULL,
-          frequency TEXT NOT NULL
+          name TEXT NOT NULL,
+          label TEXT NOT NULL
         );`,
         [],
         () => {},
@@ -98,10 +98,46 @@ export class DatabaseService {
     });
   }
 
+  addRecurrentExpenses(expenses: RecurrentExpense[]) {
+    db.transaction((tx) => {
+      expenses.forEach((expense) => {
+        tx.executeSql(
+          `INSERT INTO recurrentExpenses (amount, name, label) VALUES (?, ?, ?);`,
+          [expense.amount, expense.name, expense.label],
+          () => {},
+          (_, error) => {
+            console.error("Error adding recurrent expense", error);
+            return true;
+          },
+        );
+      });
+    });
+  }
+
   drop() {
     db.transaction((tx) => {
       tx.executeSql(
         `DROP TABLE transactions;`,
+        [],
+        () => console.log("Table dropped"),
+        (_, error) => {
+          console.error("Error dropping table", error);
+          return true;
+        },
+      );
+
+      tx.executeSql(
+        `DROP TABLE settings;`,
+        [],
+        () => console.log("Table dropped"),
+        (_, error) => {
+          console.error("Error dropping table", error);
+          return true;
+        },
+      );
+
+      tx.executeSql(
+        `DROP TABLE recurrentExpenses;`,
         [],
         () => console.log("Table dropped"),
         (_, error) => {
