@@ -1,7 +1,6 @@
 import { useGlobalSearchParams } from "expo-router";
 import { useRef } from "react";
-import { Dimensions, ImageBackground } from "react-native";
-import { ScrollView as RNScrollView } from "react-native/Libraries/Components/ScrollView/ScrollView";
+import { Dimensions, ImageBackground, ScrollView } from "react-native";
 import Animated, {
   runOnJS,
   useAnimatedReaction,
@@ -10,7 +9,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { H3, Paragraph, ScrollView, View } from "tamagui";
+import { H3, Paragraph, View } from "tamagui";
 
 import { EnterCurrentBalance } from "../components/EnterCurrentBalance";
 import { EnterRecurrentExpenses } from "../components/EnterRecurrentExpenses";
@@ -21,7 +20,7 @@ const { width } = Dimensions.get("window");
 
 export default function Page() {
   const tier = (width - 36) / 3;
-  const listRef = useRef<RNScrollView>(null);
+  const listRef = useRef<ScrollView>(null);
   const params = useGlobalSearchParams<{ step: string }>();
   const step = useDerivedValue(() => {
     return params.step ? parseInt(params.step, 10) : 1;

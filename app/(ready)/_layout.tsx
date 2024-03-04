@@ -24,8 +24,10 @@ export default function Layout() {
       return <Redirect href="/onboarding?step=2" />;
     }
 
-    // @ts-ignore
-    return <Redirect href="/onboarding?step=3" />;
+    if (!settings.current_balance) {
+      // @ts-ignore
+      return <Redirect href="/onboarding?step=3" />;
+    }
   }
 
   return <Slot />;

@@ -1,7 +1,6 @@
 import { db } from "../lib/database";
-import { useSettingsStore } from "../stores/settings";
 import { useTransactionsStore } from "../stores/transactions";
-import { RecurrentExpense, Transaction } from "../types";
+import { Transaction } from "../types";
 
 export class DatabaseService {
   static shared = new DatabaseService();
@@ -72,45 +71,6 @@ export class DatabaseService {
           return true;
         },
       );
-    });
-  }
-
-  updateSalary(salary: number) {
-    const { settings } = useSettingsStore.getState();
-    if (!settings) return;
-
-    db.transaction((tx) => {
-      tx.executeSql(
-        `UPDATE settings SET salary = ? WHERE id = ?;`,
-        [salary, settings.id],
-        () => {
-          const { setSettings } = useSettingsStore.getState();
-          setSettings({
-            ...settings,
-            salary,
-          });
-        },
-        (_, error) => {
-          console.error("Error updating salary", error);
-          return true;
-        },
-      );
-    });
-  }
-
-  addRecurrentExpenses(expenses: RecurrentExpense[]) {
-    db.transaction((tx) => {
-      expenses.forEach((expense) => {
-        tx.executeSql(
-          `INSERT INTO recurrentExpenses (amount, name, label) VALUES (?, ?, ?);`,
-          [expense.amount, expense.name, expense.label],
-          () => {},
-          (_, error) => {
-            console.error("Error adding recurrent expense", error);
-            return true;
-          },
-        );
-      });
     });
   }
 
