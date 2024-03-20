@@ -6412,6 +6412,7 @@ __metadata:
     eslint: "npm:^8.57.0"
     eslint-config-universe: "npm:^12.0.0"
     expo: "npm:~50.0.8"
+    expo-blur: "npm:~12.9.2"
     expo-font: "npm:~11.10.3"
     expo-linear-gradient: "npm:~12.7.2"
     expo-linking: "npm:~6.2.1"
@@ -8514,6 +8515,15 @@ __metadata:
     invariant: "npm:^2.2.4"
     md5-file: "npm:^3.2.3"
   checksum: 56476e567f5577a8d9dd1a277fa8d6ec5666f9c547308b558ab67d5065c5c26a5fc3ee8b6c30dcc01c6a8f5d00b9aca2a9deacf55db72925e2a65b78bd55c784
+  languageName: node
+  linkType: hard
+
+"expo-blur@npm:~12.9.2":
+  version: 12.9.2
+  resolution: "expo-blur@npm:12.9.2"
+  peerDependencies:
+    expo: "*"
+  checksum: df5a893da1f0c647506fa08459b3fe3cdd9c0078cf8b06ef8313e3e36659abd449905f5edb25d2cb1987a7ab5570e4fec992c09d042a61f01ddd08ab6a587be8
   languageName: node
   linkType: hard
 
