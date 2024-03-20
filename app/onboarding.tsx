@@ -48,13 +48,7 @@ export default function Page() {
   });
 
   return (
-    <View
-      enterStyle={{
-        opacity: 0,
-      }}
-      flex={1}
-      animation="lazy"
-    >
+    <View flex={1}>
       <ImageBackground
         source={require("../assets/images/shape.png")}
         style={{ justifyContent: "center", width, height: "auto" }}
