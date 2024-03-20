@@ -28,8 +28,6 @@ export function BalanceCard() {
       alignSelf: "center",
       borderRadius: 16,
       overflow: "hidden",
-      position: "absolute",
-      bottom: -cardHeight / 2,
       transform: [{ translateY: tY.value }, { translateX: tX.value }],
     };
   });
