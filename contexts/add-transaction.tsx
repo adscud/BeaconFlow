@@ -1,5 +1,10 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
-import { Modal, StyleSheet } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Modal,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Button, H3, H6, Input, Stack, Text, TextArea } from "tamagui";
 
@@ -104,74 +109,78 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
     <Modal visible={visible} animationType="slide">
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
-          <Stack flexDirection="row" alignItems="center">
-            <BackButton onPress={handleClose} />
-            <H3 marginLeft="$2" color="$purple12">
-              {i18n.t("addTransaction.title")}
-            </H3>
-          </Stack>
+          <KeyboardAvoidingView style={styles.flex} enabled behavior="padding">
+            <ScrollView style={styles.flex}>
+              <Stack flexDirection="row" alignItems="center">
+                <BackButton onPress={handleClose} />
+                <H3 marginLeft="$2" color="$purple12">
+                  {i18n.t("addTransaction.title")}
+                </H3>
+              </Stack>
 
-          <Stack flexDirection="row" marginTop="$8" gap="$2">
-            <TypeButton
-              type="expense"
-              currentType={transaction.type}
-              text={i18n.t("addTransaction.expense")}
-              onPress={handleToggleType}
-            />
-            <TypeButton
-              type="income"
-              currentType={transaction.type}
-              text={i18n.t("addTransaction.income")}
-              onPress={handleToggleType}
-            />
-          </Stack>
+              <Stack flexDirection="row" marginTop="$8" gap="$2">
+                <TypeButton
+                  type="expense"
+                  currentType={transaction.type}
+                  text={i18n.t("addTransaction.expense")}
+                  onPress={handleToggleType}
+                />
+                <TypeButton
+                  type="income"
+                  currentType={transaction.type}
+                  text={i18n.t("addTransaction.income")}
+                  onPress={handleToggleType}
+                />
+              </Stack>
 
-          <Stack marginTop="$4">
-            <Text marginBottom="$2" color="$purple12">
-              {i18n.t("addTransaction.amount")}
-            </Text>
-            <Input
-              placeholder="0"
-              defaultValue={transaction.amount}
-              onChangeText={handleAmountChange}
-              keyboardType="numeric"
-            />
-          </Stack>
+              <Stack marginTop="$4">
+                <Text marginBottom="$2" color="$purple12">
+                  {i18n.t("addTransaction.amount")}
+                </Text>
+                <Input
+                  placeholder="0"
+                  defaultValue={transaction.amount}
+                  onChangeText={handleAmountChange}
+                  keyboardType="numeric"
+                />
+              </Stack>
 
-          <Stack marginTop="$4">
-            <Text marginBottom="$2" color="$purple12">
-              {i18n.t("addTransaction.name")}
-            </Text>
-            <Input
-              placeholder={i18n.t("addTransaction.namePlaceholder")}
-              defaultValue={transaction.name}
-              onChangeText={handleNameChange}
-            />
-          </Stack>
-          <Stack marginTop="$4">
-            <Text marginBottom="$2" color="$purple12">
-              {i18n.t("addTransaction.description")}
-            </Text>
-            <TextArea
-              textAlignVertical="top"
-              placeholder={i18n.t("addTransaction.descriptionPlaceholder")}
-              defaultValue={transaction.description}
-              onChangeText={handleDescriptionChange}
-              minHeight="$8"
-            />
-          </Stack>
+              <Stack marginTop="$4">
+                <Text marginBottom="$2" color="$purple12">
+                  {i18n.t("addTransaction.name")}
+                </Text>
+                <Input
+                  placeholder={i18n.t("addTransaction.namePlaceholder")}
+                  defaultValue={transaction.name}
+                  onChangeText={handleNameChange}
+                />
+              </Stack>
+              <Stack marginTop="$4">
+                <Text marginBottom="$2" color="$purple12">
+                  {i18n.t("addTransaction.description")}
+                </Text>
+                <TextArea
+                  textAlignVertical="top"
+                  placeholder={i18n.t("addTransaction.descriptionPlaceholder")}
+                  defaultValue={transaction.description}
+                  onChangeText={handleDescriptionChange}
+                  minHeight="$8"
+                />
+              </Stack>
+            </ScrollView>
 
-          <Button
-            theme="purple"
-            marginTop="auto"
-            marginBottom="$4"
-            disabled={disabled}
-            onPress={handleAdd}
-          >
-            <Text color="$purple10" fontWeight="900">
-              {i18n.t("onboarding.addRecurrentExpense.add")}
-            </Text>
-          </Button>
+            <Button
+              theme="purple"
+              marginTop="auto"
+              marginVertical="$4"
+              disabled={disabled}
+              onPress={handleAdd}
+            >
+              <Text color="$purple10" fontWeight="900">
+                {i18n.t("onboarding.addRecurrentExpense.add")}
+              </Text>
+            </Button>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </SafeAreaProvider>
     </Modal>
@@ -204,5 +213,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     padding: 16,
+  },
+  flex: {
+    flex: 1,
   },
 });

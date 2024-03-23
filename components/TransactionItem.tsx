@@ -1,4 +1,4 @@
-import { H1, H3, Stack, Text } from "tamagui";
+import { H3, Stack, Text } from "tamagui";
 
 import { Transaction } from "../types";
 
@@ -26,7 +26,7 @@ export function TransactionItem({ transaction }: Props) {
 
       <H3 color={transaction.type === "expense" ? "$red9" : "$green9"}>
         {transaction.type === "expense" ? "-" : "+"}
-        {transaction.amount}
+        {transaction.amount}€
       </H3>
     </Stack>
   );
