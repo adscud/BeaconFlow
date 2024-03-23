@@ -50,6 +50,15 @@ const i18n = new I18n({
         placeholder: "Solde",
       },
     },
+    balanceCard: {
+      balance: "Solde",
+    },
+    restPerMonth: {
+      basedOn: "Basé sur un reste par mois de {{n}}€",
+      savings: "Épargne",
+      debt: "Dettes",
+      spending: "Dépenses",
+    },
   },
 });
 

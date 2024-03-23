@@ -9,6 +9,7 @@ import Animated, {
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { Stack, Text } from "tamagui";
 
+import { i18n } from "../lib/i18n";
 import { useSettingsStore } from "../stores/settings";
 
 export function BalanceCard() {
@@ -28,6 +29,7 @@ export function BalanceCard() {
       alignSelf: "center",
       borderRadius: 16,
       overflow: "hidden",
+      zIndex: 1000,
       transform: [{ translateY: tY.value }, { translateX: tX.value }],
     };
   });
@@ -53,6 +55,9 @@ export function BalanceCard() {
           animation="lazy"
         >
           <BlurView style={styles.card} intensity={100} tint="extraLight">
+            <Text fontWeight="800" color="$purple9">
+              {i18n.t("balanceCard.balance")}
+            </Text>
             <Stack flexDirection="row" alignItems="center">
               <Text color="$purple9" fontSize="$10" fontWeight="900">
                 {Intl.NumberFormat("fr-FR", {

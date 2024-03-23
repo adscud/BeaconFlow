@@ -4,6 +4,7 @@ import { Stack } from "tamagui";
 
 import { BalanceCard } from "../../../components/BalanceCard";
 import { Button } from "../../../components/Button";
+import { RestPerMonth } from "../../../components/RestPerMonth";
 import { Plus } from "../../../components/icons/Plus";
 
 export default function Page() {
@@ -34,6 +35,8 @@ export default function Page() {
         </Button>
 
         <BalanceCard />
+
+        <RestPerMonth />
       </SafeAreaView>
     </Stack>
   );
