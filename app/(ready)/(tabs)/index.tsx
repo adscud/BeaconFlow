@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <Stack
       flex={1}
-      backgroundColor="white"
+      backgroundColor="$purple2"
       enterStyle={{
         opacity: 0,
       }}

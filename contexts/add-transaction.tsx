@@ -81,8 +81,15 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
           transaction.type,
           new Date().toISOString(),
         ],
-        (_, results) => {
-          console.log("Transaction added", results);
+        () => {
+          add({
+            id: Date.now(),
+            amount: Number(transaction.amount),
+            name: transaction.name,
+            description: transaction.description,
+            type: transaction.type,
+            createdAt: new Date(),
+          });
           handleClose();
         },
         (_, error) => {

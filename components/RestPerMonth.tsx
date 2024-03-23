@@ -16,12 +16,7 @@ export function RestPerMonth() {
   const spending = disposableIncome - savings - debt;
 
   return (
-    <Stack
-      margin="$4"
-      padding="$4"
-      borderRadius={16}
-      backgroundColor="$purple5"
-    >
+    <Stack margin="$4" padding="$4" borderRadius={16} backgroundColor="white">
       <H5 fontSize="$3" textAlign="center" color="$gray10">
         {i18n.t("restPerMonth.title", { n: disposableIncome.toFixed(2) })}
       </H5>
@@ -42,10 +37,15 @@ type InfoLayoutProps = {
 function InfoLayout({ title, value }: InfoLayoutProps) {
   return (
     <Stack>
-      <Text fontSize="$4" fontWeight="bold" textTransform="uppercase">
+      <Text
+        fontSize="$4"
+        fontWeight="bold"
+        textTransform="uppercase"
+        color="$purple12"
+      >
         {title}
       </Text>
-      <H4>{value.toFixed(2)}€</H4>
+      <H4 color="$purple12">{value.toFixed(2)}€</H4>
     </Stack>
   );
 }
