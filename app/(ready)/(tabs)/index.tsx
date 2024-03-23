@@ -2,8 +2,10 @@ import { Image, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "tamagui";
 
+import { AddTransactionButton } from "../../../components/AddTransactionButton";
 import { BalanceCard } from "../../../components/BalanceCard";
 import { Button } from "../../../components/Button";
+import { LastTransactions } from "../../../components/LastTransactions";
 import { RestPerMonth } from "../../../components/RestPerMonth";
 import { Plus } from "../../../components/icons/Plus";
 
@@ -22,21 +24,10 @@ export default function Page() {
         source={require("../../../assets/images/shape.png")}
       />
       <SafeAreaView edges={["top"]}>
-        <Button
-          marginLeft="auto"
-          backgroundColor="$purple9"
-          width="$5"
-          height="$5"
-          marginRight="$4"
-          marginVertical="$2"
-          borderRadius={999}
-        >
-          <Plus color="#FFF" size={26} />
-        </Button>
-
+        <AddTransactionButton />
         <BalanceCard />
-
         <RestPerMonth />
+        <LastTransactions />
       </SafeAreaView>
     </Stack>
   );

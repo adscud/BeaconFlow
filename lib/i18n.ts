@@ -54,10 +54,14 @@ const i18n = new I18n({
       balance: "Solde",
     },
     restPerMonth: {
-      basedOn: "Basé sur un reste par mois de {{n}}€",
+      title: "Repartition de votre solde ({{n}}€)",
       savings: "Épargne",
       debt: "Dettes",
       spending: "Dépenses",
+    },
+    lastTransactions: {
+      title: "Dernières transactions",
+      noTransaction: "Vous n'avez pas encore de transactions,\najoutez-en !",
     },
   },
 });
