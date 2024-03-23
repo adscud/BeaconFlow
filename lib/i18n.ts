@@ -63,6 +63,13 @@ const i18n = new I18n({
       title: "Dernières transactions",
       noTransaction: "Vous n'avez pas encore de transactions,\najoutez-en !",
     },
+    addTransaction: {
+      title: "Ajouter une transaction",
+      expense: "Dépense",
+      income: "Revenu",
+      amount: "Montant",
+      add: "Ajouter",
+    },
   },
 });
 
