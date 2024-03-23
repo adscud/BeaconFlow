@@ -1,13 +1,13 @@
 import { Redirect, Stack } from "expo-router";
 
 import { useAppStore } from "../../stores/app";
-import { useRecurringExpenses } from "../../stores/recurring-expenses";
+import { useRecurringExpensesStore } from "../../stores/recurring-expenses";
 import { useSettingsStore } from "../../stores/settings";
 
 export default function Layout() {
   const [loading] = useAppStore((store) => [store.loading]);
   const [settings] = useSettingsStore((store) => [store.settings]);
-  const [expenses] = useRecurringExpenses((store) => [store.expenses]);
+  const [expenses] = useRecurringExpensesStore((store) => [store.expenses]);
 
   if (!loading && !settings) {
     return <Redirect href="/onboarding" />;

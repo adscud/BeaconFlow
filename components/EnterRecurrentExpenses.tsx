@@ -11,7 +11,7 @@ import { ArrowLeft } from "./icons/ArrowLeft";
 import { ArrowRight } from "./icons/ArrowRight";
 import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
-import { useRecurringExpenses } from "../stores/recurring-expenses";
+import { useRecurringExpensesStore } from "../stores/recurring-expenses";
 import { RecurrentExpense } from "../types";
 
 const { width } = Dimensions.get("window");
@@ -20,7 +20,7 @@ export function EnterRecurrentExpenses() {
     present: () => void;
   }>(null);
   const router = useRouter();
-  const [expenses, setExpenses] = useRecurringExpenses((store) => [
+  const [expenses, setExpenses] = useRecurringExpensesStore((store) => [
     store.expenses,
     store.setExpenses,
   ]);

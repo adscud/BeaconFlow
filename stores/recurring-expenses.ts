@@ -7,7 +7,7 @@ type Store = {
   setExpenses: (expenses: RecurrentExpense[]) => void;
 };
 
-export const useRecurringExpenses = create<Store>((set) => ({
+export const useRecurringExpensesStore = create<Store>((set) => ({
   expenses: [],
   setExpenses: (expenses) => set({ expenses }),
 }));

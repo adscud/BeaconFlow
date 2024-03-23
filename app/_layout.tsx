@@ -14,8 +14,9 @@ import "../tamagui-web.css";
 import { db } from "../lib/database";
 import { DatabaseService } from "../services/DatabaseService";
 import { useAppStore } from "../stores/app";
-import { useRecurringExpenses } from "../stores/recurring-expenses";
+import { useRecurringExpensesStore } from "../stores/recurring-expenses";
 import { useSettingsStore } from "../stores/settings";
+import { useTransactionsStore } from "../stores/transactions";
 import { config } from "../tamagui.config";
 
 export {
@@ -32,7 +33,12 @@ export default function RootLayout() {
     store.setLoading,
   ]);
   const [setSettings] = useSettingsStore((store) => [store.setSettings]);
-  const [setExpenses] = useRecurringExpenses((store) => [store.setExpenses]);
+  const [setExpenses] = useRecurringExpensesStore((store) => [
+    store.setExpenses,
+  ]);
+  const [setTransactions] = useTransactionsStore((store) => [
+    store.setTransactions,
+  ]);
 
   const [interLoaded, interError] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
@@ -57,6 +63,15 @@ export default function RootLayout() {
             (_, { rows }) => {
               setExpenses(rows._array);
               setLoading(false);
+            },
+          );
+
+          tx.executeSql(
+            `SELECT * FROM transactions LIMIT 3`,
+            [],
+            (_, { rows }) => {
+              const transactions = rows._array;
+              setTransactions(transactions);
             },
           );
         },

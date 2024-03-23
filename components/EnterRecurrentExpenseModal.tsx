@@ -133,6 +133,7 @@ export const AddRecurrentExpenseModal = forwardRef<
           />
         </Picker>
         <Button
+          theme="purple"
           marginTop="auto"
           marginBottom="$4"
           disabled={disabled}

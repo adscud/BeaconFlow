@@ -1,12 +1,12 @@
 import { H4, H5, Stack, Text } from "tamagui";
 
 import { i18n } from "../lib/i18n";
-import { useRecurringExpenses } from "../stores/recurring-expenses";
+import { useRecurringExpensesStore } from "../stores/recurring-expenses";
 import { useSettingsStore } from "../stores/settings";
 
 export function RestPerMonth() {
   const salary = useSettingsStore((state) => state.settings?.salary ?? 0);
-  const recurrentExpensesAmount = useRecurringExpenses((state) =>
+  const recurrentExpensesAmount = useRecurringExpensesStore((state) =>
     state.expenses.reduce((acc, expense) => acc + expense.amount, 0),
   );
   const disposableIncome = salary - recurrentExpensesAmount;
