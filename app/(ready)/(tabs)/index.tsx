@@ -4,10 +4,8 @@ import { Stack } from "tamagui";
 
 import { AddTransactionButton } from "../../../components/AddTransactionButton";
 import { BalanceCard } from "../../../components/BalanceCard";
-import { Button } from "../../../components/Button";
 import { LastTransactions } from "../../../components/LastTransactions";
 import { RestPerMonth } from "../../../components/RestPerMonth";
-import { Plus } from "../../../components/icons/Plus";
 
 export default function Page() {
   return (

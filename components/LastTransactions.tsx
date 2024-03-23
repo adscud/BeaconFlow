@@ -1,5 +1,4 @@
-import { BotIcon } from "lucide-react-native";
-import { H2, H5, H6, Stack, Text, View } from "tamagui";
+import { H5, Stack, Text } from "tamagui";
 
 import { AddTransactionButton } from "./AddTransactionButton";
 import { i18n } from "../lib/i18n";

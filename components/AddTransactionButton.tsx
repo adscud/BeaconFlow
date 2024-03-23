@@ -2,10 +2,14 @@ import { ButtonProps } from "tamagui";
 
 import { Button } from "./Button";
 import { Plus } from "./icons/Plus";
+import {
+  AddTransactionProvider,
+  useAddTransaction,
+} from "../contexts/add-transaction";
 
-type Props = ButtonProps;
+function Component(props: ButtonProps) {
+  const addTransaction = useAddTransaction();
 
-export function AddTransactionButton(props: ButtonProps) {
   return (
     <Button
       marginLeft="auto"
@@ -16,8 +20,17 @@ export function AddTransactionButton(props: ButtonProps) {
       marginVertical="$2"
       borderRadius={999}
       {...props}
+      onPress={addTransaction}
     >
       <Plus color="#FFF" size={26} />
     </Button>
+  );
+}
+
+export function AddTransactionButton(props: ButtonProps) {
+  return (
+    <AddTransactionProvider>
+      <Component {...props} />
+    </AddTransactionProvider>
   );
 }

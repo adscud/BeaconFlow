@@ -54,7 +54,7 @@ const i18n = new I18n({
       balance: "Solde",
     },
     restPerMonth: {
-      title: "Repartition de votre solde ({{n}}€)",
+      title: "Repartition de votre solde mensuel ({{n}}€)",
       savings: "Épargne",
       debt: "Dettes",
       spending: "Dépenses",
