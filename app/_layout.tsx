@@ -67,7 +67,7 @@ export default function RootLayout() {
           );
 
           tx.executeSql(
-            `SELECT * FROM transactions LIMIT 3`,
+            `SELECT * FROM transactions ORDER BY createdAt DESC LIMIT 3 `,
             [],
             (_, { rows }) => {
               const transactions = rows._array;

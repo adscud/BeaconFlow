@@ -13,6 +13,6 @@ export const useTransactionsStore = create<Store>((set) => {
     transactions: [],
     setTransactions: (transactions) => set({ transactions }),
     addTransaction: (transaction) =>
-      set((state) => ({ transactions: [...state.transactions, transaction] })),
+      set((state) => ({ transactions: [transaction, ...state.transactions] })),
   };
 });
