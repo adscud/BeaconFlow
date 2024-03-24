@@ -4,9 +4,10 @@ import { Transaction } from "../types";
 
 type Props = {
   transaction: Transaction;
+  withDate?: boolean;
 };
 
-export function TransactionItem({ transaction }: Props) {
+export function TransactionItem({ transaction, withDate = true }: Props) {
   return (
     <Stack
       flexDirection="row"
@@ -15,13 +16,15 @@ export function TransactionItem({ transaction }: Props) {
       padding="$3"
       borderRadius={16}
     >
-      <Stack>
+      <Stack justifyContent="center">
         <Text color="$purple12" fontSize="$6">
           {transaction.name}
         </Text>
-        <Text color="$purple12" fontSize="$2">
-          {new Date(transaction.createdAt).toLocaleDateString("fr-FR")}
-        </Text>
+        {withDate && (
+          <Text color="$purple12" fontSize="$2">
+            {new Date(transaction.createdAt).toLocaleDateString("fr-FR")}
+          </Text>
+        )}
       </Stack>
 
       <H3 color={transaction.type === "expense" ? "$red9" : "$green9"}>
