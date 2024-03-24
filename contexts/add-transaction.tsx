@@ -59,7 +59,11 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
     store.settings,
     store.setSettings,
   ]);
-  const [add] = useTransactionsStore((store) => [store.addTransaction]);
+  const [add, count, setCount] = useTransactionsStore((store) => [
+    store.addTransaction,
+    store.count,
+    store.setCount,
+  ]);
   const [transaction, setTransaction] = useState<typeof BASE_TX>(BASE_TX);
   const disabled =
     !transaction.amount ||
@@ -103,6 +107,7 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
             type: transaction.type,
             createdAt: new Date(),
           });
+          setCount(count + 1);
           if (settings) {
             const newBalance =
               settings.current_balance +
