@@ -22,7 +22,7 @@ export default function Page() {
         source={require("../../../assets/images/shape.png")}
       />
       <SafeAreaView edges={["top"]} style={styles.flex}>
-        <ScrollView style={styles.flex}>
+        <ScrollView style={styles.flex} showsVerticalScrollIndicator={false}>
           <AddTransactionButton />
           <BalanceCard />
           <RestPerMonth />
