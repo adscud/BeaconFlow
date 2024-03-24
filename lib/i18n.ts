@@ -74,6 +74,9 @@ const i18n = new I18n({
       descriptionPlaceholder: "Achat de nourriture",
       add: "Ajouter",
     },
+    transactions: {
+      title: "Transactions",
+    },
   },
 });
 

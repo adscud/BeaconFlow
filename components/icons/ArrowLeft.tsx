@@ -1,5 +1,9 @@
 import { ArrowLeftCircle } from "lucide-react-native";
 
-export function ArrowLeft() {
-  return <ArrowLeftCircle size={20} color="#2B0E44" />;
+type Props = {
+  color?: string;
+};
+
+export function ArrowLeft({ color = "#2B0E44" }: Props) {
+  return <ArrowLeftCircle size={20} color={color} />;
 }

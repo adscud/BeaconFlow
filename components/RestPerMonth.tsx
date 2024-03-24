@@ -16,7 +16,13 @@ export function RestPerMonth() {
   const spending = disposableIncome - savings - debt;
 
   return (
-    <Stack margin="$4" padding="$4" borderRadius={16} backgroundColor="white">
+    <Stack
+      margin="$4"
+      marginVertical="$4"
+      padding="$4"
+      borderRadius={16}
+      backgroundColor="white"
+    >
       <H5 fontSize="$3" textAlign="center" color="$gray10">
         {i18n.t("restPerMonth.title", { n: disposableIncome.toFixed(2) })}
       </H5>
