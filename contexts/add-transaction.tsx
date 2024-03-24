@@ -11,6 +11,7 @@ import { Button, H3, H6, Input, Stack, Text, TextArea } from "tamagui";
 import { BackButton } from "../components/BackButton";
 import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
+import { useSettingsStore } from "../stores/settings";
 import { useTransactionsStore } from "../stores/transactions";
 
 const AddTransactionContext = createContext<{ open: () => void }>({
@@ -41,6 +42,10 @@ type AddTransactionProps = {
 };
 
 function AddTransaction({ visible, handleClose }: AddTransactionProps) {
+  const [settings, setSettings] = useSettingsStore((store) => [
+    store.settings,
+    store.setSettings,
+  ]);
   const [add] = useTransactionsStore((store) => [store.addTransaction]);
   const [transaction, setTransaction] = useState<{
     amount: string;
@@ -95,6 +100,30 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
             type: transaction.type,
             createdAt: new Date(),
           });
+          if (settings) {
+            const newBalance =
+              settings.current_balance +
+              (transaction.type === "expense" ? -1 : 1) *
+                Number(transaction.amount);
+
+            setSettings({
+              ...settings,
+              current_balance: newBalance,
+            });
+
+            tx.executeSql(
+              `UPDATE settings SET current_balance = ? WHERE id = 1`,
+              [newBalance],
+              (_, result) => {
+                console.log("Updated balance", result);
+              },
+              (_, error) => {
+                console.error("Error updating balance", error);
+                return true;
+              },
+            );
+          }
+
           handleClose();
         },
         (_, error) => {
