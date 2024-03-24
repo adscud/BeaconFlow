@@ -73,6 +73,7 @@ export default function Page() {
           overflow="hidden"
         >
           <FlashList
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={{ padding: 18 }}
             data={transactionsByDateUnique}
             renderItem={({ item, index }) => {
@@ -100,7 +101,7 @@ export default function Page() {
             getItemType={(item) => {
               return typeof item === "string" ? "sectionHeader" : "row";
             }}
-            estimatedItemSize={100}
+            estimatedItemSize={57}
           />
         </Stack>
       </SafeAreaView>

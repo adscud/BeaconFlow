@@ -13,6 +13,7 @@ import { db } from "../lib/database";
 import { i18n } from "../lib/i18n";
 import { useSettingsStore } from "../stores/settings";
 import { useTransactionsStore } from "../stores/transactions";
+import { Transaction } from "../types";
 
 const AddTransactionContext = createContext<{ open: () => void }>({
   open: () => {},
@@ -41,23 +42,25 @@ type AddTransactionProps = {
   handleClose: () => void;
 };
 
+const BASE_TX: {
+  amount: string;
+  name: string;
+  description: string;
+  type: "expense" | "income";
+} = {
+  amount: "",
+  name: "",
+  description: "",
+  type: "expense",
+};
+
 function AddTransaction({ visible, handleClose }: AddTransactionProps) {
   const [settings, setSettings] = useSettingsStore((store) => [
     store.settings,
     store.setSettings,
   ]);
   const [add] = useTransactionsStore((store) => [store.addTransaction]);
-  const [transaction, setTransaction] = useState<{
-    amount: string;
-    name: string;
-    description: string;
-    type: "expense" | "income";
-  }>({
-    amount: "0",
-    name: "",
-    description: "",
-    type: "expense",
-  });
+  const [transaction, setTransaction] = useState<typeof BASE_TX>(BASE_TX);
   const disabled =
     !transaction.amount ||
     !transaction.name ||
@@ -114,9 +117,7 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
             tx.executeSql(
               `UPDATE settings SET current_balance = ? WHERE id = 1`,
               [newBalance],
-              (_, result) => {
-                console.log("Updated balance", result);
-              },
+              (_, result) => {},
               (_, error) => {
                 console.error("Error updating balance", error);
                 return true;
@@ -124,6 +125,7 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
             );
           }
 
+          setTransaction(BASE_TX);
           handleClose();
         },
         (_, error) => {
@@ -167,7 +169,7 @@ function AddTransaction({ visible, handleClose }: AddTransactionProps) {
                   {i18n.t("addTransaction.amount")}
                 </Text>
                 <Input
-                  placeholder="0"
+                  placeholder="200"
                   defaultValue={transaction.amount}
                   onChangeText={handleAmountChange}
                   keyboardType="numeric"

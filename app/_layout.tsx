@@ -36,8 +36,9 @@ export default function RootLayout() {
   const [setExpenses] = useRecurringExpensesStore((store) => [
     store.setExpenses,
   ]);
-  const [setTransactions] = useTransactionsStore((store) => [
+  const [setTransactions, setCount] = useTransactionsStore((store) => [
     store.setTransactions,
+    store.setCount,
   ]);
 
   const [interLoaded, interError] = useFonts({
@@ -67,11 +68,20 @@ export default function RootLayout() {
           );
 
           tx.executeSql(
-            `SELECT * FROM transactions ORDER BY createdAt DESC LIMIT 3 `,
+            `SELECT * FROM transactions ORDER BY createdAt DESC LIMIT 12`,
             [],
             (_, { rows }) => {
               const transactions = rows._array;
               setTransactions(transactions);
+            },
+          );
+
+          tx.executeSql(
+            // count tx
+            `SELECT COUNT(*) as count FROM transactions`,
+            [],
+            (_, { rows }) => {
+              setCount(rows._array[0].count);
             },
           );
         },
