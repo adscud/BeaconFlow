@@ -1,4 +1,4 @@
-import { Image, StyleSheet } from "react-native";
+import { Image, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "tamagui";
 
@@ -21,17 +21,22 @@ export default function Page() {
         style={styles.cardContainer}
         source={require("../../../assets/images/shape.png")}
       />
-      <SafeAreaView edges={["top"]}>
-        <AddTransactionButton />
-        <BalanceCard />
-        <RestPerMonth />
-        <LastTransactions />
+      <SafeAreaView edges={["top"]} style={styles.flex}>
+        <ScrollView style={styles.flex}>
+          <AddTransactionButton />
+          <BalanceCard />
+          <RestPerMonth />
+          <LastTransactions />
+        </ScrollView>
       </SafeAreaView>
     </Stack>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   cardContainer: {
     position: "absolute",
     left: 0,
